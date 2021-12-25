@@ -21,15 +21,17 @@ class CreateExpensesTable extends Migration
             $table->date('date');
             $table->string('receipt_path');
             $table->timestamps();
+            $table->integer('IDU')->unsigned()->nullable();
+            $table->foreign('IDU')->references('IDU')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->integer('IDC')->unsigned()->nullable();
+            $table->foreign('IDC')->references('IDC')->on('categories')->onUpdate('CASCADE')->onDelete('CASCADE');      
         });
 
+        /*
         // SQLite cannot both add the collumns and the FKs at the same time, therefore it must be broken into 2 Schema blocks
-        Schema::table('expenses', function (Blueprint $table) {
-            $table->integer('IDU')->unsigned();
-            $table->foreign('IDU')->references('IDU')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->integer('IDC')->unsigned();
-            $table->foreign('IDC')->references('IDC')->on('categories')->onUpdate('CASCADE')->onDelete('CASCADE');        
-        });
+          Schema::table('expenses', function (Blueprint $table) {
+              
+        });*/
     }
 
     /**
