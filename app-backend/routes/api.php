@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\Expenses;
 use App\Models\Categories;
-
+use App\Http\Controllers\ExpensesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,19 +18,9 @@ use App\Models\Categories;
 |
 */
 
-Route::get('/expenses', function(){
-    return Expenses::all();
-});
+Route::get('/expenses', [ExpensesController::class, 'index']);
 
-Route::post('expenses', function() {
-    return Expenses::create([
-        'name' => 'Expense One',
-        'slug' => 'expense-one',
-        'value' => '15',
-        'date' => '1997-12-20',
-        'receipt_path' => 'no_receipt'
-    ]);
-});
+Route::post('expenses', [ExpensesController::class, 'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
