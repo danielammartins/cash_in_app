@@ -26,9 +26,9 @@ class CreateExpensesTable extends Migration
         // SQLite cannot both add the collumns and the FKs at the same time, therefore it must be broken into 2 Schema blocks
         Schema::table('expenses', function (Blueprint $table) {
             $table->integer('IDU')->unsigned();
-            $table->foreign('IDU')->references('IDU')->on('users');
+            $table->foreign('IDU')->references('IDU')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->integer('IDC')->unsigned();
-            $table->foreign('IDC')->references('IDC')->on('categories');        
+            $table->foreign('IDC')->references('IDC')->on('categories')->onUpdate('CASCADE')->onDelete('CASCADE');        
         });
     }
 
