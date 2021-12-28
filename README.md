@@ -7,6 +7,6 @@ Check the .env file to make sure all the database info is corrent for your syste
 
 If you wish to load an external .env file, add the ``--env`` argument followed by the PATH to your .env file when initializing the laravel project via CLI.
 
-If there are problems with compatibility or dependencies , run ``composer update ``.
+If there are problems with compatibility or dependencies , run ``composer update``.
 
 # API Documentation
