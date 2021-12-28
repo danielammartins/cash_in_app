@@ -18,10 +18,20 @@ use App\Http\Controllers\ExpensesController;
 |
 */
 
-Route::get('/expenses', [ExpensesController::class, 'index']);
+/*
+    Public Routes
+*/
 
-Route::post('expenses', [ExpensesController::class, 'store']);
+//Route::get('/expenses', [ExpensesController::class, 'index']);
+//Route::post('/expenses', [ExpensesController::class, 'store']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//FIX maneira preguiçosa se não ter de fazer cada rota individualmente
+Route::resource('expenses', ExpensesController::class);
+
+/*
+    Protected Routes
+*/
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/expenses/search/{name}', [ExpensesController::class, 'search']);
 });
+

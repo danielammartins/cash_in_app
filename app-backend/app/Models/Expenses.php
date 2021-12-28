@@ -10,9 +10,11 @@ class Expenses extends Model
     use HasFactory;
     protected $table = 'expenses';
 
+    public $timestamps = false;
+
     protected $fillable = [
+        'IDE',
         'name',
-        'slug',
         'value',
         'date',
         'receipt_path'

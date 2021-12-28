@@ -25,11 +25,14 @@ class ExpensesController extends Controller
      */
     public function store(Request $request)
     {
+        // TODO add all required values
         $request->validate([
             'name' => 'required',
-            'value' => 'required'
+            'value' => 'required',
+            'date' => 'required',
+            'receipt_path' => 'required'
         ]);
-        
+       
         return Expenses::create($request->all());
     }
 
@@ -41,7 +44,7 @@ class ExpensesController extends Controller
      */
     public function show($id)
     {
-        //
+        return Expenses::find($id);
     }
 
     /**
@@ -53,7 +56,9 @@ class ExpensesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $expense = Expenses::find($id);
+        $expense->update($request->all());
+        return $expense;
     }
 
     /**
@@ -64,6 +69,20 @@ class ExpensesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Expenses::destroy($id);
+    }
+
+    /**
+     * Search for the specified resource from storage.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Http\Response
+     */
+    public function search($name)
+    {
+        // Only returns if it matches exactly, kept for reference
+        //return Expenses::where('name', 'like', '%'.$name.'%')->get();
+        
+        return Expenses::where('name', 'like', '%'.$name.'%')->get();
     }
 }

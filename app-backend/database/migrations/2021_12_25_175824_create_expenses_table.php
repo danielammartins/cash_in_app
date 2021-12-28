@@ -13,25 +13,24 @@ class CreateExpensesTable extends Migration
      */
     public function up()
     {
+        //FIXME can't change name of ID parameter without crashing
         Schema::create('expenses', function (Blueprint $table) {
-            $table->increments('IDE');
+            $table->increments('id')->unsigned();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->integer('value')->unsigned();
             $table->date('date');
-            $table->string('receipt_path');
-            $table->timestamps();
+            $table->string('receipt_path')->nullable();
             $table->integer('IDU')->unsigned()->nullable();
-            $table->foreign('IDU')->references('IDU')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->integer('IDC')->unsigned()->nullable();
-            $table->foreign('IDC')->references('IDC')->on('categories')->onUpdate('CASCADE')->onDelete('CASCADE');      
         });
 
-        /*
-        // SQLite cannot both add the collumns and the FKs at the same time, therefore it must be broken into 2 Schema blocks
-          Schema::table('expenses', function (Blueprint $table) {
-              
-        });*/
+        // SQLite cannot both add the columns and the FKs at the same time, therefore it must be broken into 2 Schema blocks
+        Schema::table('expenses', function (Blueprint $table) {
+            $table->foreign('IDU')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('IDC')->references('id')->on('categories')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->primary('id');      
+        });
     }
 
     /**
