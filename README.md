@@ -22,10 +22,15 @@ If there are problems with compatibility or dependencies , run ``composer update
 - [ ]  '/dashboard'
 - [ ]  '/graphs'
 - [ ]  '/expenses'
-- [ ]  '/expenses/add'
-- [ ]  '/expenses/delete'
-- [ ]  '/expenses/update'
-- [ ]  '/expenses/search{name}'
+
+## Endpoints
+
+- [ ]  GET '/expenses/{id}'
+- [ ]  POST '/expenses/{id}'
+- [ ]  DELETE '/expenses/{id}'
+- [ ]  PUT '/expenses/{id}'
+- [ ]  GET '/expenses/search/{name}'
+
+## Coming soon
 - [ ]  '/expenses/import'
 - [ ]  '/expenses/export'
-
