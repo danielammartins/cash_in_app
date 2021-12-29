@@ -10,3 +10,22 @@ If you wish to load an external .env file, add the ``--env`` argument followed b
 If there are problems with compatibility or dependencies , run ``composer update``.
 
 # API Documentation
+
+## Public Routes
+
+- [ ] '/'
+- [ ] '/login'
+- [ ] '/register'
+- [ ] '/contact-us'
+
+## Protected Routes
+- [ ]  '/dashboard'
+- [ ]  '/graphs'
+- [ ]  '/expenses'
+- [ ]  '/expenses/add'
+- [ ]  '/expenses/delete'
+- [ ]  '/expenses/update'
+- [ ]  '/expenses/search{name}'
+- [ ]  '/expenses/import'
+- [ ]  '/expenses/export'
+
