@@ -21,13 +21,14 @@ class CreateExpensesTable extends Migration
             $table->integer('value')->unsigned();
             $table->date('date');
             $table->string('receipt_path')->nullable();
-            $table->integer('IDU')->unsigned()->nullable();
+            // FIXME user is identified by email, when it should have a numeral ID
+            $table->string('IDU')->nullable();
             $table->integer('IDC')->unsigned()->nullable();
         });
 
         // SQLite cannot both add the columns and the FKs at the same time, therefore it must be broken into 2 Schema blocks
         Schema::table('expenses', function (Blueprint $table) {
-            $table->foreign('IDU')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('IDU')->references('email')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreign('IDC')->references('id')->on('categories')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->primary('id');      
         });
