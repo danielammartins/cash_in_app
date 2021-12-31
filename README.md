@@ -3,9 +3,9 @@ Frontend @ [GitHub do Chico](https://github.com/RainyPT/WebSpendingFrontend)
 Relatório @ [Overleaf](https://www.overleaf.com/read/xdqxzybgvmfc)
 
 ## Correr o servidor
-1- Clonar o projecto (git clone https://github.com/danielammartins/WebSpendingBackend);
-2- fazer `cd` no directorio WebSpendingBackend/app-backend;
-3- `php artisan serve`, mas se der erro fazer `composer update` em primeiro.
+1. Clonar o projecto (git clone https://github.com/danielammartins/WebSpendingBackend);
+2. Fazer `cd` no directorio WebSpendingBackend/app-backend;
+3. `php artisan serve`, mas se der erro fazer `composer update` em primeiro.
 
 # API Documentation
 
