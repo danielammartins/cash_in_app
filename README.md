@@ -15,6 +15,8 @@ Steps:
 2. `cd app-backend`;
 3. Start the server with `php artisan serve`
 
+### Testing the API with Postman
+Make sure to add the key `Accept` with the value `application/json` in the Header.
 
 
 # API Documentation
