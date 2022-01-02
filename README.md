@@ -1,3 +1,10 @@
+.warning {
+  --text: #6a737d;  // theme text color default
+  --title: inherit; // theme title color (falls back to text color by default)
+  --background: #f8f8f9;
+  --border: #8b939c;
+}
+
 Frontend @ [GitHub do Chico](https://github.com/RainyPT/WebSpendingFrontend)
 
 Relatório @ [Overleaf](https://www.overleaf.com/read/xdqxzybgvmfc)
