@@ -16,7 +16,7 @@ Steps:
 3. Start the server with `php artisan serve`
 
 ### Testing the API with Postman
-Make sure to add the key `Accept` with the value `application/json` in the Header.
+Make sure to add the key `Accept` with the value `application/json` headers.
 
 
 # API Documentation

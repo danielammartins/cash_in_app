@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Reponse;
 use App\Models\User;
 
 class AuthController extends Controller
 {
+    
+    /*
     public function register(Request $request) {
         $fields = $request->validate([
             'name' => 'required|string',
@@ -30,4 +32,7 @@ class AuthController extends Controller
 
         return response($response, 201);
     }
+    */
+
+    
 }
