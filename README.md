@@ -8,12 +8,13 @@ Check the .env file to make sure all the database info is corrent for your syste
 
 If you wish to load an external .env file, add the ``--env`` argument followed by the PATH to your .env file when initializing the laravel project via CLI.
 
-If there are problems with compatibility or dependencies when strarting the server, run ``composer update``.
 
 Steps:
 1. Clone the repo;
 2. `cd app-backend`;
 3. Start the server with `php artisan serve`
+
+If there are problems with compatibility or dependencies when starting the server, run ``composer update``.
 
 ### Testing the API with Postman
 Make sure to add the key `Accept` with the value `application/json` headers.
@@ -24,14 +25,15 @@ Make sure to add the key `Accept` with the value `application/json` headers.
 ## Public Routes
 
 - [ ] '/'
-- [ ] '/login'
-- [ ] '/register'
+- [x] '/login'
+- [x] '/register'
 - [ ] '/contact-us'
 
 ## Protected Routes
 - [ ]  '/dashboard'
 - [ ]  '/graphs'
 - [ ]  '/expenses'
+- [x]  '/logout'
 
 ## Endpoints
 
