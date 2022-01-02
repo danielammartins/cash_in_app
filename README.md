@@ -37,11 +37,11 @@ Make sure to add the key `Accept` with the value `application/json` headers.
 
 ## Endpoints
 
-- [ ]  GET '/expenses/{id}'
-- [ ]  POST '/expenses/{id}'
-- [ ]  DELETE '/expenses/{id}'
-- [ ]  PUT '/expenses/{id}'
-- [ ]  GET '/expenses/search/{name}'
+- [x]  GET '/expenses/{id}'
+- [x]  POST '/expenses/{id}'
+- [x]  DELETE '/expenses/{id}'
+- [x]  PUT '/expenses/{id}'
+- [x]  GET '/expenses/search/{name}'
 
 ## Coming soon
 - [ ]  '/expenses/import'
