@@ -12,12 +12,13 @@ use Facade\FlareClient\Api;
 /*
     Public Routes
 */
-//Route::post('/register', [AuthController::class, 'register']);
-//Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
 
 /*
     Protected Routes
 */
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/expenses', [ExpenseController::class, 'store']);
     Route::get('/expenses', [ExpenseController::class, 'index']);
@@ -27,6 +28,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/expenses/{id}', [ExpenseController::class, 'update']);
         
     Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy']);
+
+    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
    
 
