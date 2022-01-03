@@ -12,9 +12,13 @@ If you wish to load an external .env file, add the ``--env`` argument followed b
 Steps:
 1. Clone the repo;
 2. `cd app-backend`;
-3. Start the server with `php artisan serve`
+4. Start the server with `php artisan serve`
 
 If there are problems with compatibility or dependencies when starting the server, run ``composer update``.
+
+The local database is, by default, not included with the other files. To set it up for testing, create a `database.sqlite` file in `/database/` and run the migrations with `php artisan migrate`. 
+<p class="callout warning">If the .env file database info was changed, you will need to update the new .env with the correct database information! </p>
+
 
 ### Testing the API with Postman
 Make sure to add the key `Accept` with the value `application/json` headers.
@@ -46,3 +50,4 @@ Make sure to add the key `Accept` with the value `application/json` headers.
 ## Coming soon
 - [ ]  '/expenses/import'
 - [ ]  '/expenses/export'
+
