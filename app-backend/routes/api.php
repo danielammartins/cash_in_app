@@ -20,6 +20,10 @@ Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login'])
 */
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+        // authenticated user. Use User::find() to get the user from db by id
+        //return app()->request()->user();
+
+    //Route::get('/user', [])
     Route::post('/expenses', [ExpenseController::class, 'store']);
     Route::get('/expenses', [ExpenseController::class, 'index']);
     Route::get('/expenses/search/{name}', [ExpenseController::class, 'search']);
