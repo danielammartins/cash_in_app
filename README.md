@@ -21,7 +21,7 @@ The local database is, by default, not included with the other files. To set it 
 
 
 ### Testing the API with Postman
-Make sure to add the key `Accept` with the value `application/json` headers.
+Make sure to add the key `Accept` with the value `application/json` in the headers.
 
 
 # API Documentation
@@ -46,6 +46,11 @@ Make sure to add the key `Accept` with the value `application/json` headers.
 - [x]  DELETE '/expenses/{id}'
 - [x]  PUT '/expenses/{id}'
 - [x]  GET '/expenses/search/{name}'
+- [x]  GET '/categories/{id}'
+- [x]  POST '/categories/{id}'
+- [x]  DELETE '/categories/{id}'
+- [x]  PUT '/categories/{id}'
+- [x]  GET '/categories/search/{name}'
 
 ## Coming soon
 - [ ]  '/expenses/import'

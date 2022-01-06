@@ -16,4 +16,8 @@ class Category extends Model
         'name', 
         'main_category'
     ];
+
+    public function category() {
+        return $this->belongsTo('App\Expenses');
+    }
 }

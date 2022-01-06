@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -20,10 +21,23 @@ Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login'])
 */
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-        // authenticated user. Use User::find() to get the user from db by id
-        //return app()->request()->user();
+    // authenticated user. Use User::find() to get the user from db by id
+    //return app()->request()->user();
 
     //Route::get('/user', [])
+
+    // Category Endpoints
+    Route::post('/categories', [CategoryController::class, 'store']);
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/categories/search/{name}', [CategoryController::class, 'search']);
+    Route::get('/categories/{id}', [CategoryController::class, 'show']);
+    
+    Route::put('/categories/{id}', [CategoryController::class, 'update']);
+    
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+
+    // Expenses Endpoints
+
     Route::post('/expenses', [ExpenseController::class, 'store']);
     Route::get('/expenses', [ExpenseController::class, 'index']);
     Route::get('/expenses/search/{name}', [ExpenseController::class, 'search']);
@@ -33,6 +47,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         
     Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy']);
 
+    // User Endpoints
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
    
