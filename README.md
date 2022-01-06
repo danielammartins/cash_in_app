@@ -16,7 +16,6 @@ Steps:
 
 If there are problems with compatibility or dependencies when starting the server, run ``composer update``.
 
-The local database is, by default, not included with the other files. To set it up for testing, create a `database.sqlite` file in `/database/` and run the migrations with `php artisan migrate`. 
 <p class="callout warning">If the .env file database info was changed, you will need to update the new .env with the correct database information! </p>
 
 
