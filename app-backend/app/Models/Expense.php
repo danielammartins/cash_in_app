@@ -17,6 +17,7 @@ class Expense extends Model
         'value',
         'date',
         'receipt_path',
-        'description'
+        'description',
+        'category_id'
     ];
 }

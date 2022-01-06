@@ -20,11 +20,13 @@ class CreateExpensesTable extends Migration
             $table->integer('value');
             // TODO must be date
             $table->string('date');
-            //$table->timestamps();
-
+            $table->integer('category_id')->unsigned()->nullable();
             // Optional
             $table->string('description')->nullable();
             $table->string('receipt_path')->nullable();
+
+            // Foreign Keys
+            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
