@@ -7,10 +7,13 @@ use App\Models\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\UserTraits;
+use App\Traits\ExpenseTraits;
 
 class ExpenseController extends Controller
 {
     use UserTraits;
+    use ExpenseTraits;
+
     /**
      * Display a listing of the resource.
      *
@@ -29,26 +32,32 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO add all required values
-        $request->validate([
-            'name' => 'required',
-            'value' => 'required',
-            'date' => 'required',
-        ]);
-        
-        $id = $this->getUserID();
-        
-        return Expense::create([
-            'name' => $request->name,
-            'value' => $request->value,
-            'date' => $request->date,
-            'category_id' => $request->category_id,
-            'description' => $request->description,
-            'receipt_path' => $request->receipt_path,
-            'user' => $id
-        ]);
+        // Checks the DB to make sure there are categories before the user can add a new expense
+        if($this->isCategories()) {
+            // TODO add all required values
+            $request->validate([
+                'name' => 'required',
+                'value' => 'required',
+                'date' => 'required',
+            ]);
 
-        //return Expense::create($request->all());
+            $id = $this->getUserID();
+
+            return Expense::create([
+                'name' => $request->name,
+                'value' => $request->value,
+                'date' => $request->date,
+                'category_id' => $request->category_id,
+                'description' => $request->description,
+                'receipt_path' => $request->receipt_path,
+                'user' => $id
+            ]);
+        }
+        else {
+            return response(['message'=>'No Categories Available'], 404);
+        }
+        
+
     }
 
     /**
