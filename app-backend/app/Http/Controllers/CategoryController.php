@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Traits\UserTraits;
 
 class CategoryController extends Controller
 {
+    use UserTraits;
+
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +31,21 @@ class CategoryController extends Controller
         // TODO add all required values
         $request->validate([
             'name' => 'required',
+            'main_category' => 'required'
         ]);
-       
-        return Category::create($request->all());
+
+        $id = $this->getUserID();
+
+        //if($request->main_category ==)
+
+        //return Category::create($request->all());
+
+        return Category::create([
+            'name' => $request->name,
+            'main_category' => $request->main_category,
+            'user' => $id
+        ]);
+
     }
 
     /**
