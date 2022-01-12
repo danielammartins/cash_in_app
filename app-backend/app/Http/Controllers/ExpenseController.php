@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Expense;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\UserTraits;
 
 class ExpenseController extends Controller
 {
+    use UserTraits;
     /**
      * Display a listing of the resource.
      *
@@ -31,8 +35,20 @@ class ExpenseController extends Controller
             'value' => 'required',
             'date' => 'required',
         ]);
-       
-        return Expense::create($request->all());
+        
+        $id = $this->getUserID();
+        
+        return Expense::create([
+            'name' => $request->name,
+            'value' => $request->value,
+            'date' => $request->date,
+            'category_id' => $request->category_id,
+            'description' => $request->description,
+            'receipt_path' => $request->receipt_path,
+            'user' => $id
+        ]);
+
+        //return Expense::create($request->all());
     }
 
     /**
@@ -59,6 +75,7 @@ class ExpenseController extends Controller
         $expense->update($request->all());
         return $expense;
     }
+
 
     /**
      * Remove the specified resource from storage.

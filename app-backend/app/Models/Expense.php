@@ -18,7 +18,8 @@ class Expense extends Model
         'date',
         'receipt_path',
         'description',
-        'category_id'
+        'category_id',
+        'user'
     ];
 
     public function expense() {

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Expenses;
 use App\Models\Categories;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\UserController;
 use App\Models\Expense;
 use Facade\FlareClient\Api;
 
@@ -24,9 +25,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // authenticated user. Use User::find() to get the user from db by id
     //return app()->request()->user();
 
-    //Route::get('/user', [])
+    Route::get('/user', [UserController::class, 'getUserID']);
 
-    // Category Endpoints
+    // Categories Endpoints
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/search/{name}', [CategoryController::class, 'search']);
@@ -37,7 +38,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
     // Expenses Endpoints
-
     Route::post('/expenses', [ExpenseController::class, 'store']);
     Route::get('/expenses', [ExpenseController::class, 'index']);
     Route::get('/expenses/search/{name}', [ExpenseController::class, 'search']);
