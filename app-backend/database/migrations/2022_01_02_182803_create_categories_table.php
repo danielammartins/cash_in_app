@@ -21,6 +21,8 @@ class CreateCategoriesTable extends Migration
 
             // Foreign Keys
             $table->foreign('user')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            // TODO se tiver tempo
+            //$table->foreign('main_category')->references('id')->on('categories')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
