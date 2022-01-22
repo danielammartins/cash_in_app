@@ -28,8 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
-            // BUG not forwarding to the right url
-            $spaURL = '?email_verify_url='.$url;
+            $spaURL = 'http://127.0.0.1?email_verify_url='.$url;
 
             return (new MailMessage)
                 ->subject('Please Verify Email Address')
