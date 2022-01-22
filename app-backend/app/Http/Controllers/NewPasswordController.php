@@ -65,17 +65,6 @@ class NewPasswordController extends Controller
         ], 500);
     }
 
-    /*
-    public function reset() {
-        $credentials = request()->validate([
-            'email' => 'required|email',
-            'password' => 'required|string|confirmed',
-            'token' => 'required|string'
-        ]);
-
-        Password::reset($credentials, function($user, $password) {
-            $user->password = $password;
-            $user->save();
-        });
-    }*/
+    
+   
 }

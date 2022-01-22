@@ -37,21 +37,18 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 */
 
-Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
-Route::get('/verify-email{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
-
 Route::post('/forgot-password', [NewPasswordController::class, 'forgotPassword']);
 Route::post('/reset-password', [NewPasswordController::class, 'reset'])->name('password.reset');;
 
 /*
     Protected Routes
 */
-
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     // authenticated user. Use User::find() to get the user from db by id
     //return app()->request()->user();
 
     Route::get('/user', [UserController::class, 'getUserID']);
+    Route::post('/change-password', [UserController::class, 'changePassword']);
 
     // Categories Endpoints
     Route::post('/categories', [CategoryController::class, 'store']);
@@ -76,6 +73,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // User Endpoints
+    Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
+    Route::get('/verify-email{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
    

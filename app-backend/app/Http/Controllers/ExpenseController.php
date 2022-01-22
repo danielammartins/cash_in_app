@@ -107,7 +107,7 @@ class ExpenseController extends Controller
     {
         // Only returns if it matches exactly, kept for reference
         //return Expenses::where('name', 'like', '%'.$name.'%')->get();
-        
+        // TODO send only ID, name and date
         return Expense::where('name', 'like', '%'.$name.'%')->get();
     }
 }

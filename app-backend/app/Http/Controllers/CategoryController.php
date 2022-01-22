@@ -39,7 +39,21 @@ class CategoryController extends Controller
         if(Category::select('id')->where('name','LIKE', $request->name)->first() == null) {
             $id = $this->getUserID();
 
-         
+            if($request->main_category == 0) {
+                return Category::create([
+                    'name' => $request->name,
+                    'main_category' => 0,
+                    'user' => $id
+                ]);
+            }
+            else {
+                $main = Category::select('id')->where('name','LIKE', $request->main_category)->first();
+                return Category::create([
+                    'name' => $request->name,
+                    'main_category' => $main->id,
+                    'user' => $id
+                ]);
+            }
         }
         else {             
             return response(['message'=>'The chosen category name is already taken!'], 404);
