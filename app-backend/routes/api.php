@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Expenses;
 use App\Models\Categories;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\UserController;
 use App\Models\Expense;
 use Facade\FlareClient\Api;
@@ -37,7 +38,10 @@ Route::post('/email/verification-notification', function (Request $request) {
 */
 
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
-Route::get('verify-email{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
+Route::get('/verify-email{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
+Route::post('/forgot-password', [NewPasswordController::class, 'forgotPassword']);
+Route::post('/reset-password', [NewPasswordController::class, 'reset'])->name('password.reset');;
+
 /*
     Protected Routes
 */
@@ -67,9 +71,6 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::put('/expenses/{id}', [ExpenseController::class, 'update']);
         
     Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy']);
-
-    // User Endpoints
-    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
