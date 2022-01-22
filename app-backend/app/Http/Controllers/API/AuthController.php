@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -28,6 +29,9 @@ class AuthController extends Controller
             'user' => $user, 
             'token' => $token
         ];
+
+        // This event is linked to the SendEmailVerificationNotification listener at the EventServiceProvider and triggers the email verification
+        event(new Registered($user));
 
         return response($response, 201);
     }
@@ -55,7 +59,7 @@ class AuthController extends Controller
     }
 
     public function logout() {
-        // DEVCOMMENT Dá erro mas é culpa do intelephense
+        // DEV Dá erro mas é culpa do intelephense
         auth()->user()->tokens()->delete();
         
         return response(['message'=>'Logged Out Successfully']);

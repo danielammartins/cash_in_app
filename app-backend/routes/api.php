@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EmailVerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -10,6 +11,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\UserController;
 use App\Models\Expense;
 use Facade\FlareClient\Api;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
     Public Routes
@@ -18,10 +20,29 @@ Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'regis
 Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
 
 /*
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+*/
+
+Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
+Route::get('verify-email{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
+/*
     Protected Routes
 */
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     // authenticated user. Use User::find() to get the user from db by id
     //return app()->request()->user();
 
@@ -47,6 +68,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         
     Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy']);
 
+    // User Endpoints
+    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
+});
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
     // User Endpoints
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });

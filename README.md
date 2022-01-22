@@ -10,9 +10,12 @@ If you wish to load an external .env file, add the ``--env`` argument followed b
 
 
 Steps:
-1. Clone the repo;
-2. `cd app-backend`;
-4. Start the server with `php artisan serve`
+1. Clone the repo
+2. `cd app-backend`
+3. Run `composer install` or ```php composer.phar install```
+4. Run `php artisan key:generate` 
+5. Run `php artisan migrate`
+6. Start the server with `php artisan serve`
 
 If there are problems with compatibility or dependencies when starting the server, run ``composer update``.
 
