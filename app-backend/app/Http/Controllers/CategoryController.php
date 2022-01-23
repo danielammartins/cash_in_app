@@ -6,10 +6,12 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\UserTraits;
 use Illuminate\Support\Facades\DB;
+use App\Traits\CategoryTraits;
 
 class CategoryController extends Controller
 {
     use UserTraits;
+    use CategoryTraits;
 
     /**
      * Display a listing of the resource.
@@ -32,34 +34,31 @@ class CategoryController extends Controller
         // TODO add all required values
         $request->validate([
             'name' => 'required',
-            'main_category' => 'required'
+            'main_category' => 'nullable'
         ]);
 
         // Verifies whether the category already exists
         if(Category::select('id')->where('name','LIKE', $request->name)->first() == null) {
+
+            /*  If the main_category field is empty, the category is a main category.
+            If it's not empty, the category is a subcategory  */
+            if(!empty($request->input('main_category'))) {
+                $idCategory = $this->getCategoryID($request->main_category);
+            } else {
+                $idCategory = 0;       
+            }
+
             $id = $this->getUserID();
 
-            if($request->main_category == 0) {
-                return Category::create([
-                    'name' => $request->name,
-                    'main_category' => 0,
-                    'user' => $id
-                ]);
-            }
-            else {
-                $main = Category::select('id')->where('name','LIKE', $request->main_category)->first();
-                return Category::create([
-                    'name' => $request->name,
-                    'main_category' => $main->id,
-                    'user' => $id
-                ]);
-            }
+            return Category::create([
+                'name' => $request->name,
+                'main_category' => $idCategory,
+                'user' => $id
+            ]);
         }
         else {             
             return response(['message'=>'The chosen category name is already taken!'], 404);
         }
-
-        
 
     }
 

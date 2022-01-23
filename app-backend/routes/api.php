@@ -54,6 +54,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/expenses/{id}', [ExpenseController::class, 'show']);
     Route::get('/show-expenses/category', [ExpenseController::class, 'showByCategory']);
     Route::get('/show-expenses/date', [ExpenseController::class, 'showByDate']);
+    Route::post('/expected-monthly/category', [ExpenseController::class, 'expectedMonthlyExpensesByCategory']);
+    Route::post('/expected-monthly/total', [ExpenseController::class, 'expectedMonthlyExpenses']);
 
     Route::put('/expenses/{id}', [ExpenseController::class, 'update']);
         

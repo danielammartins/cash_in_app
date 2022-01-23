@@ -117,13 +117,25 @@ class ExpenseController extends Controller
     public function showByDate(Request $request) {
 
         $data = $request->validate([
-            'date_begin' => 'required|string',
-            'date_end' => 'required|string'
+            'date_begin' => 'required',
+            'date_end' => 'required'
         ]);
 
+
         // By default, where conditions are chaining with AND operator
-        return Expense::all()->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end'])->sortBy('date');
-    }  
+       //Expense::all()->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end'])->sortBy('date');
+        $list = Expense::all()->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end'])->sortBy('date')->sortBy('date');
+
+        $arr = [];
+        $i=0;
+        foreach ($list as $f => $v) {
+            $arr[$i] = $v;
+            $i++;
+        }
+
+        return $arr;
+
+    } 
 
     public function showByCategory(Request $request) {
 
@@ -136,8 +148,70 @@ class ExpenseController extends Controller
         $id = $this->getCategoryID($data['category_name']);
 
         // By default, where conditions are chaining with AND operator
-        return Expense::all()->where('category_id', '=', $id)->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end'])->sortBy('date');
+        $list = Expense::all()->where('category_id', '=', $id)->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end'])->sortBy('date');
+
+        $arr = [];
+        $i=0;
+        foreach ($list as $f => $v) {
+            $arr[$i] = $v;
+            $i++;
+        }
+
+        return $arr;
     }  
+
+
+    /** 
+     * Returns the total expected value of the monthly expenses in a given category
+    **/
+
+    public function expectedMonthlyExpensesByCategory(Request $request) {
+        $data = $request->validate([
+            'category_name' => 'required|string'
+        ]);
+
+        $id = $this->getCategoryID($data['category_name']);
+
+        // Get the begin and end dates of last month
+        $begin_month = date("Y-m-d", strtotime("first day of previous month"));
+        $end_month = date("Y-m-d", strtotime("last day of previous month"));
+
+        // Get all expenses from a given category
+        $expenses = Expense::where('category_id', '=', $id)->where('date','>=',$begin_month)->where('date', '<=', $end_month)->get('value');
+
+        $count = 0;
+
+        // Total expenses of the pasth month
+        for($i=0;$i<sizeof($expenses);$i++) {
+            $count += $expenses[$i]->value;
+        }
+
+        return $count;
+    }
+
+    /** 
+     * Returns the total expected value of the monthly expenses 
+    **/
+
+    public function expectedMonthlyExpenses(Request $request) {
+
+        // Get the begin and end dates of last month
+        $begin_month = date("Y-m-d", strtotime("first day of previous month"));
+        $end_month = date("Y-m-d", strtotime("last day of previous month"));
+
+        // Get all expenses from a given category
+        $expenses = Expense::where('date','>=',$begin_month)->where('date', '<=', $end_month)->get('value');
+
+        $count = 0;
+
+        // Total expenses of the pasth month
+        for($i=0;$i<sizeof($expenses);$i++) {
+            $count += $expenses[$i]->value;
+        }
+
+        // Return the total expected of the given category
+        return $count;
+    }
 }
     
 

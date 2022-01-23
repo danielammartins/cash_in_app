@@ -16,10 +16,8 @@ class CreateExpensesTable extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            // TODO must be decimal
-            $table->integer('value');
-            // TODO must be date
-            $table->string('date');
+            $table->float('value');
+            $table->date('date');
             $table->integer('category_id')->unsigned()->nullable();
             $table->integer('user')->unsigned()->nullable();
             // Optional
