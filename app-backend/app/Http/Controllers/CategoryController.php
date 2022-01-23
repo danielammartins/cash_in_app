@@ -34,7 +34,8 @@ class CategoryController extends Controller
         // TODO add all required values
         $request->validate([
             'name' => 'required',
-            'main_category' => 'nullable'
+            'main_category' => 'nullable',
+            'max' => 'nullable'
         ]);
 
         // Verifies whether the category already exists
@@ -53,7 +54,9 @@ class CategoryController extends Controller
             return Category::create([
                 'name' => $request->name,
                 'main_category' => $idCategory,
-                'user' => $id
+                'user' => $id,
+                'max' => $request->max,
+                'min' => $request->min
             ]);
         }
         else {             

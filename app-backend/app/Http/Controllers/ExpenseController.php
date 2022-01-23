@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Expense;
 use Illuminate\Http\Request;
@@ -181,7 +182,7 @@ class ExpenseController extends Controller
 
         $count = 0;
 
-        // Total expenses of the pasth month
+        // Total expenses of the past month
         for($i=0;$i<sizeof($expenses);$i++) {
             $count += $expenses[$i]->value;
         }
@@ -212,6 +213,42 @@ class ExpenseController extends Controller
         // Return the total expected of the given category
         return $count;
     }
+
+    /* 
+        Returns the % of money spent given a category's max value
+    */
+
+    public function usagePercentage(Request $request) {
+        $data = $request->validate([
+            'category_name' => 'required|string'
+        ]);
+
+        $id = $this->getCategoryID($data['category_name']);
+
+        $category = Category::where('id', '=', $id)->get('max');
+
+        $max = $category[0]->max;
+
+        // Get the begin and end dates of current month
+        $begin_month = date("Y-m-d", strtotime("first day of this month"));
+        $end_month = date("Y-m-d", strtotime("last day of this month"));
+
+        // Get all expenses from a given category in the current month
+        $expenses = Expense::where('category_id', '=', $id)->where('date','>=',$begin_month)->where('date', '<=', $end_month)->get('value');
+
+        $count = 0;
+
+        // Total expenses of the current month
+        for($i=0;$i<sizeof($expenses);$i++) {
+            $count += $expenses[$i]->value;
+        }
+
+        // Returns the percentage of usage
+        return (($count * 100) / $max);
+
+    }
+
 }
     
+
 

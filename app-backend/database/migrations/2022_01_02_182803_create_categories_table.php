@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->integer('main_category')->nullable();
             $table->integer('user')->unsigned()->nullable();
+            $table->integer('max')->unsigned()->nullable();
 
             // Foreign Keys
             $table->foreign('user')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
