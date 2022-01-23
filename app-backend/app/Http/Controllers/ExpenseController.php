@@ -41,8 +41,10 @@ class ExpenseController extends Controller
                 'name' => 'required',
                 'value' => 'required',
                 'date' => 'required',
-                'category_id' => 'required'
+                'category_name' => 'required'
             ]);
+
+            $idCategory = $this->getCategoryID($request->category_name);
 
             $id = $this->getUserID();
 
@@ -50,7 +52,7 @@ class ExpenseController extends Controller
                 'name' => $request->name,
                 'value' => $request->value,
                 'date' => $request->date,
-                'category_id' => $request->category_id,
+                'category_id' => $idCategory,
                 'description' => $request->description,
                 'receipt_path' => $request->receipt_path,
                 'user' => $id
