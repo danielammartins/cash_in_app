@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-
+use Illuminate\Validation\Rules\Password as RulesPassword;
 
 class AuthController extends Controller
 {
@@ -15,7 +15,7 @@ class AuthController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:191',
             'email' => 'required|email|max:191|unique:users,email',
-            'password' => 'required|string'
+            'password' => ['required', 'confirmed', RulesPassword::defaults()]
         ]);
 
         $user = User::create([
@@ -62,7 +62,6 @@ class AuthController extends Controller
     public function logout() {
         // DEV Dá erro mas é culpa do intelephense
         auth()->user()->tokens()->delete();
-        
         return response(['message'=>'Logged Out Successfully']);
     }
 

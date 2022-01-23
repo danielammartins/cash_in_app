@@ -6,17 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password as RulesPassword;
+use App\Traits\UserTraits;
 
 /* TODO is this necessary? */ 
 class UserController extends Controller
 {
+    use UserTraits;
+
     /**
      * Change the password for the authenticated user
      */
     public function changePassword(Request $request) {
         $data = $request->validate([
             'current_password' => 'required|string',
-            'new_password' => 'required|string|confirmed'
+            'new_password' => ['required', 'confirmed', RulesPassword::defaults()]
         ]);
 
         if(!(Hash::check($data['current_password'], Auth::user()->password))) {
@@ -29,52 +33,10 @@ class UserController extends Controller
 
         $user = Auth::user();
         $user->password = bcrypt($data['new_password']);
+        // DEV Dá erro mas é culpa do intelephense
         $user->save();
         return response(['message'=>'Password changed!']);
 
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
@@ -83,8 +45,20 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteUser(Request $request)
     {
-        //
+        $data = $request->validate([
+            'password' => 'required|string'
+        ]);
+
+        if(!Hash::check($data['password'], Auth::user()->password)) {
+            return response(['message'=>'Invalid Credentials. The account was not deleted!'], 401);
+        }
+        else {
+            $id = $this->getUserID();
+            User::find($id)->delete();
+            return response(['message'=>'User Deleted!'], 200);
+        }
+       
     }
 }

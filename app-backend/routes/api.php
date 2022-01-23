@@ -18,27 +18,13 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
     Public Routes
 */
 Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
-Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
-
-/*
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-*/
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login'])->name('login');;
 
 Route::post('/forgot-password', [NewPasswordController::class, 'forgotPassword']);
 Route::post('/reset-password', [NewPasswordController::class, 'reset'])->name('password.reset');;
+
+Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
+Route::get('/verify-email{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
 
 /*
     Protected Routes
@@ -62,9 +48,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     // Expenses Endpoints
     Route::post('/expenses', [ExpenseController::class, 'store']);
+
     Route::get('/expenses', [ExpenseController::class, 'index']);
     Route::get('/expenses/search/{name}', [ExpenseController::class, 'search']);
     Route::get('/expenses/{id}', [ExpenseController::class, 'show']);
+    Route::get('/expenses/by-category', [ExpenseController::class, 'byCategory']);
 
     Route::put('/expenses/{id}', [ExpenseController::class, 'update']);
         
@@ -73,8 +61,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // User Endpoints
-    Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
-    Route::get('/verify-email{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
+   
+    Route::delete('/delete-account', [UserController::class, 'deleteUser']);
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
    
