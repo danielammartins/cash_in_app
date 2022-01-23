@@ -122,7 +122,7 @@ class ExpenseController extends Controller
         ]);
 
         // By default, where conditions are chaining with AND operator
-        return Expense::all()->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end']);
+        return Expense::all()->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end'])->sortBy('date');
     }  
 
     public function showByCategory(Request $request) {
@@ -136,7 +136,7 @@ class ExpenseController extends Controller
         $id = $this->getCategoryID($data['category_name']);
 
         // By default, where conditions are chaining with AND operator
-        return Expense::all()->where('category_id', '=', $id)->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end']);
+        return Expense::all()->where('category_id', '=', $id)->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end'])->sortBy('date');
     }  
 }
     
