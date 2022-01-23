@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExpenseExport;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Expense;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\UserTraits;
 use App\Traits\ExpenseTraits;
 use App\Traits\CategoryTraits;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExpenseController extends Controller
 {
@@ -245,9 +247,11 @@ class ExpenseController extends Controller
 
         // Returns the percentage of usage
         return (($count * 100) / $max);
-
     }
 
+    public function export() {
+        return Excel::download(new ExpenseExport, 'expenses.xls');
+    }
 }
     
 

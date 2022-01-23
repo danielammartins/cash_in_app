@@ -10,6 +10,7 @@ use App\Models\Categories;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ExcelController;
 use App\Models\Expense;
 use Facade\FlareClient\Api;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -52,15 +53,21 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/expenses', [ExpenseController::class, 'index']);
     Route::get('/expenses/search/{name}', [ExpenseController::class, 'search']);
     Route::get('/expenses/{id}', [ExpenseController::class, 'show']);
+    Route::get('/export/expenses', [ExpenseController::class, 'export']);
     Route::get('/show-expenses/category', [ExpenseController::class, 'showByCategory']);
     Route::get('/show-expenses/date', [ExpenseController::class, 'showByDate']);
+
+
     Route::post('/expected-monthly/category', [ExpenseController::class, 'expectedMonthlyExpensesByCategory']);
     Route::post('/expected-monthly/total', [ExpenseController::class, 'expectedMonthlyExpenses']);
     Route::post('/usage-percentage', [ExpenseController::class, 'usagePercentage']);
+    Route::post('/add-receipt', [ExpenseController::class, 'receipt']);
 
     Route::put('/expenses/{id}', [ExpenseController::class, 'update']);
         
     Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy']);
+
+
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
