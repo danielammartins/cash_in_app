@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\UserTraits;
 use App\Traits\ExpenseTraits;
+use App\Traits\CategoryTraits;
 
 class ExpenseController extends Controller
 {
     use UserTraits;
     use ExpenseTraits;
+    use CategoryTraits;
 
     /**
      * Display a listing of the resource.
@@ -39,6 +41,7 @@ class ExpenseController extends Controller
                 'name' => 'required',
                 'value' => 'required',
                 'date' => 'required',
+                'category_id' => 'required'
             ]);
 
             $id = $this->getUserID();
@@ -56,7 +59,6 @@ class ExpenseController extends Controller
         else {
             return response(['message'=>'No Categories Available'], 404);
         }
-        
 
     }
 
@@ -85,7 +87,6 @@ class ExpenseController extends Controller
         return $expense;
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -110,4 +111,31 @@ class ExpenseController extends Controller
         // TODO send only ID, name and date
         return Expense::where('name', 'like', '%'.$name.'%')->get();
     }
+    
+    public function showByDate(Request $request) {
+
+        $data = $request->validate([
+            'date_begin' => 'required|string',
+            'date_end' => 'required|string'
+        ]);
+
+        // By default, where conditions are chaining with AND operator
+        return Expense::all()->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end']);
+    }  
+
+    public function showByCategory(Request $request) {
+
+        $data = $request->validate([
+            'category_name' => 'required|string',
+            'date_begin' => 'required|string',
+            'date_end' => 'required|string'
+        ]);
+
+        $id = $this->getCategoryID($data['category_name']);
+
+        // By default, where conditions are chaining with AND operator
+        return Expense::all()->where('category_id', '=', $id)->where('date','>',$data['date_begin'])->where('date', '<', $data['date_end']);
+    }  
 }
+    
+
