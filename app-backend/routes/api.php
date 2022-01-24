@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/categories/search/{name}', [CategoryController::class, 'search']);
     Route::get('/categories/{id}', [CategoryController::class, 'show']);
     
-    Route::put('/categories/{id}', [CategoryController::class, 'update']);
+    Route::put('/categories', [CategoryController::class, 'update']);
     
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
