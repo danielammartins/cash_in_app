@@ -32,7 +32,6 @@ class NewPasswordController extends Controller
             'email' => [trans($status)]
         ]);
     }
-
     
     public function reset(Request $request) {
         $request->validate([
@@ -64,7 +63,4 @@ class NewPasswordController extends Controller
             'message' => __($status)
         ], 500);
     }
-
-    
-   
 }

@@ -2,18 +2,10 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmailVerificationController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use App\Models\Expenses;
-use App\Models\Categories;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ExcelController;
-use App\Models\Expense;
-use Facade\FlareClient\Api;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
     Public Routes
@@ -31,9 +23,6 @@ Route::get('/verify-email{id}/{hash}', [EmailVerificationController::class, 'ver
     Protected Routes
 */
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
-    // authenticated user. Use User::find() to get the user from db by id
-    //return app()->request()->user();
-
     Route::get('/user', [UserController::class, 'getUserID']);
     Route::post('/change-password', [UserController::class, 'changePassword']);
 
@@ -66,13 +55,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::put('/expenses/{id}', [ExpenseController::class, 'update']);
         
     Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy']);
-
-
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    // User Endpoints
-   
     Route::delete('/delete-account', [UserController::class, 'deleteUser']);
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });

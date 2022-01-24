@@ -31,7 +31,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO add all required values
         $request->validate([
             'name' => 'required',
             'main_category' => 'nullable',
@@ -62,7 +61,6 @@ class CategoryController extends Controller
         else {             
             return response(['message'=>'The chosen category name is already taken!'], 404);
         }
-
     }
 
     /**

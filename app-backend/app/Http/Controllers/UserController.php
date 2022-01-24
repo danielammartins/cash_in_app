@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password as RulesPassword;
 use App\Traits\UserTraits;
 
-/* TODO is this necessary? */ 
 class UserController extends Controller
 {
     use UserTraits;
@@ -33,10 +32,9 @@ class UserController extends Controller
 
         $user = Auth::user();
         $user->password = bcrypt($data['new_password']);
-        // DEV Dá erro mas é culpa do intelephense
         $user->save();
+        
         return response(['message'=>'Password changed!']);
-
     }
 
     /**
@@ -59,6 +57,5 @@ class UserController extends Controller
             User::find($id)->delete();
             return response(['message'=>'User Deleted!'], 200);
         }
-       
     }
 }

@@ -60,7 +60,6 @@ class AuthController extends Controller
     }
 
     public function logout() {
-        // DEV Dá erro mas é culpa do intelephense
         auth()->user()->tokens()->delete();
         return response(['message'=>'Logged Out Successfully']);
     }

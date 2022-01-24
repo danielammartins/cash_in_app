@@ -39,7 +39,6 @@ class ExpenseController extends Controller
     {
         // Checks the DB to make sure there are categories before the user can add a new expense
         if($this->isCategories()) {
-            // TODO add all required values
             $request->validate([
                 'name' => 'required',
                 'value' => 'required',
@@ -113,7 +112,6 @@ class ExpenseController extends Controller
     {
         // Only returns if it matches exactly, kept for reference
         //return Expenses::where('name', 'like', '%'.$name.'%')->get();
-        // TODO send only ID, name and date
         return Expense::where('name', 'like', '%'.$name.'%')->get();
     }
     
@@ -137,7 +135,6 @@ class ExpenseController extends Controller
         }
 
         return $arr;
-
     } 
 
     public function showByCategory(Request $request) {
@@ -162,7 +159,6 @@ class ExpenseController extends Controller
 
         return $arr;
     }  
-
 
     /** 
      * Returns the total expected value of the monthly expenses in a given category
